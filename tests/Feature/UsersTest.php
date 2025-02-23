@@ -34,7 +34,7 @@ class UsersTest extends TestCase
             ->assertInertia(function (Assert $page) {
                 $page->component('Users/Index');
                 $page->has('users.data', 5, function (Assert $page) {
-                    $page->hasAll(['id', 'name', 'email', 'owner', 'photo', 'deleted_at']);
+                    $page->hasAll(['id', 'name', 'email', 'role', 'owner', 'photo', 'deleted_at']);
                 });
             });
     }
