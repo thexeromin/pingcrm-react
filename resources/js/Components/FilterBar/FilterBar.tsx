@@ -77,7 +77,8 @@ export default function FilterBar() {
                   options={[
                     { value: '', label: '' },
                     { value: 'user', label: 'User' },
-                    { value: 'owner', label: 'Owner' }
+                    { value: 'manager', label: 'Manager' },
+                    { value: 'admin', label: 'Admin' }
                   ]}
                 />
               </FieldGroup>

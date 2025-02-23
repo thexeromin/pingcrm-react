@@ -18,6 +18,7 @@ class UserCollection extends ResourceCollection
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'role' => $user->role,
             'owner' => $user->owner,
             'photo' => $user->photo ? url()->route('image', ['path' => $user->photo, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
             'deleted_at' => $user->deleted_at,

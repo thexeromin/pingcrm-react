@@ -10,6 +10,7 @@ export interface User {
   photo: string;
   deleted_at: string;
   account: Account;
+  role: string;
 }
 
 export interface Account {

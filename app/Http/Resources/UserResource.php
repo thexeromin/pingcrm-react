@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'last_name' => $this->last_name,
             'name' => $this->name,
             'email' => $this->email,
+            'role' => $this->role,
             'owner' => $this->owner,
             'photo' => $this->photo ? url()->route('image', ['path' => $this->photo, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
             'deleted_at' => $this->deleted_at,

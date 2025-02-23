@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'photo',
+        'role',
     ];
 
     /**
@@ -84,8 +85,9 @@ class User extends Authenticatable
     public function scopeWhereRole($query, $role)
     {
         switch ($role) {
-            case 'user': return $query->where('owner', false);
-            case 'owner': return $query->where('owner', true);
+            case 'user': return $query->where('role', 'user');
+            case 'manager': return $query->where('role', 'manager');
+            case 'admin': return $query->where('role', 'admin');
         }
     }
 

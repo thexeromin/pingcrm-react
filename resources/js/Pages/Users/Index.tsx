@@ -52,9 +52,9 @@ const Index = () => {
           { label: 'Email', name: 'email' },
           {
             label: 'Role',
-            name: 'owner',
+            name: 'role',
             colSpan: 2,
-            renderCell: row => (row.owner ? 'Owner' : 'User')
+            renderCell: row => row.role
           }
         ]}
         rows={data}
