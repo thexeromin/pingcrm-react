@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function () {
         ->name('organizations');
 
     Route::get('organizations/create', [OrganizationsController::class, 'create'])
-        ->name('organizations.create');
+        ->name('organizations.create')
         ->middleware('role:admin,manager');
 
     Route::post('organizations', [OrganizationsController::class, 'store'])
