@@ -12,7 +12,10 @@ import Table from '@/Components/Table/Table';
 import FieldGroup from '@/Components/Form/FieldGroup';
 
 const Edit = () => {
-  const { organization } = usePage<{ organization: Organization }>().props;
+  const { organization, currentUser } = usePage<{
+    organization: Organization;
+    currentUser: { role: string };
+  }>().props;
   const { data, setData, errors, put, processing } = useForm({
     name: organization.name || '',
     email: organization.email || '',
@@ -159,18 +162,20 @@ const Edit = () => {
             </FieldGroup>
           </div>
           <div className="flex items-center px-8 py-4 bg-gray-100 border-t border-gray-200">
-            {!organization.deleted_at && (
+            {!organization.deleted_at && currentUser.role === 'admin' && (
               <DeleteButton onDelete={destroy}>
                 Delete Organization
               </DeleteButton>
             )}
-            <LoadingButton
-              loading={processing}
-              type="submit"
-              className="ml-auto btn-indigo"
-            >
-              Update Organization
-            </LoadingButton>
+            {['admin', 'manager'].includes(currentUser.role) && (
+              <LoadingButton
+                loading={processing}
+                type="submit"
+                className="ml-auto btn-indigo"
+              >
+                Update Organization
+              </LoadingButton>
+            )}
           </div>
         </form>
       </div>

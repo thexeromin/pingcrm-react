@@ -79,8 +79,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin,manager');
 
     Route::get('organizations/{organization}/edit', [OrganizationsController::class, 'edit'])
-        ->name('organizations.edit')
-        ->middleware('role:admin,manager');
+        ->name('organizations.edit');
 
     Route::put('organizations/{organization}', [OrganizationsController::class, 'update'])
         ->name('organizations.update')

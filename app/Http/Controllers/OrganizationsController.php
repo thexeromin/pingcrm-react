@@ -48,6 +48,9 @@ class OrganizationsController extends Controller
     {
         return Inertia::render('Organizations/Edit', [
             'organization' => new OrganizationResource($organization),
+            'currentUser' => [
+              'role' => Auth::user()->role,
+            ],
         ]);
     }
 
