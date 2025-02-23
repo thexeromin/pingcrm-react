@@ -21,7 +21,7 @@ const Edit = () => {
     last_name: user.last_name || '',
     email: user.email || '',
     password: user.password || '',
-    owner: user.owner ? '1' : '0' || '0',
+    role: user.role || 'user',
     photo: '',
 
     // NOTE: When working with Laravel PUT/PATCH requests and FormData
@@ -124,15 +124,16 @@ const Edit = () => {
               />
             </FieldGroup>
 
-            <FieldGroup label="Owner" name="owner" error={errors.owner}>
+            <FieldGroup label="Role" name="role" error={errors.role}>
               <SelectInput
-                name="owner"
-                error={errors.owner}
-                value={data.owner}
-                onChange={e => setData('owner', e.target.value)}
+                name="role"
+                error={errors.role}
+                value={data.role}
+                onChange={e => setData('role', e.target.value)}
                 options={[
-                  { value: '1', label: 'Yes' },
-                  { value: '0', label: 'No' }
+                  { value: 'user', label: 'User' },
+                  { value: 'manager', label: 'Manager' },
+                  { value: 'admin', label: 'Admin' },
                 ]}
               />
             </FieldGroup>

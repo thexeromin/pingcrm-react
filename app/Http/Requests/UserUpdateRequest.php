@@ -24,7 +24,7 @@ class UserUpdateRequest extends FormRequest
                 Rule::unique('users')->ignore($this->route('user')->id),
             ],
             'password' => ['nullable'],
-            'owner' => ['required', 'boolean'],
+            'role' => ['required', 'in:user,admin,manager'],
             'photo' => ['nullable', 'image'],
         ];
     }
