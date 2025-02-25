@@ -60,9 +60,12 @@ class UsersController extends Controller
 
     public function update(User $user, UserUpdateRequest $request): RedirectResponse
     {
-        $user->update(
-            $request->validated()
-        );
+        $data = $request->validated();
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $user->update($data);
 
         if ($request->hasFile('photo')) {
             $user->update([
