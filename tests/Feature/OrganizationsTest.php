@@ -118,4 +118,35 @@ class OrganizationsTest extends TestCase
 		$response = $this->delete("/organizations/{$organization->id}");
 		$response->assertRedirect()->assertSessionHas('success', 'Organization deleted.');
     }
+
+    public function test_manager_cannot_delete_org() {
+		$this->user->role = 'manager';
+        $this->actingAs($this->user);
+
+		$organization = Organization::factory()->create([
+			'account_id' => $this->user->account_id
+		]);
+		$response = $this->delete("/organizations/{$organization->id}");
+        $response->assertStatus(403);
+        $response->assertSeeText('You do not have permission to access this resource.');
+    }
+
+    public function test_user_cannot_delete_or_update_org() {
+		$this->user->role = 'user';
+        $this->actingAs($this->user);
+
+        // update
+		$organization = Organization::factory()->create([
+			'account_id' => $this->user->account_id
+		]);
+        $updateData = ['name' => 'Updated Org'];
+        $response = $this->put("/organizations/{$organization->id}", $updateData);
+        $response->assertStatus(403);
+        $response->assertSeeText('You do not have permission to access this resource.');
+
+        // delete
+		$response = $this->delete("/organizations/{$organization->id}");
+        $response->assertStatus(403);
+        $response->assertSeeText('You do not have permission to access this resource.');
+    }
 }
