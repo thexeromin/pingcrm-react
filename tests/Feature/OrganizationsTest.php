@@ -22,6 +22,7 @@ class OrganizationsTest extends TestCase
             'last_name' => 'Doe',
             'email' => 'johndoe@example.com',
             'owner' => true,
+            'role' => 'admin',
         ]);
     }
 
@@ -86,5 +87,35 @@ class OrganizationsTest extends TestCase
                 $page->where('filters.trashed', 'with');
                 $page->has('organizations.data', 5);
             });
+    }
+
+    // Role based tests
+
+    public function test_admin_has_full_access_of_organization() 
+    {
+		$this->user->role = 'admin';
+        $this->actingAs($this->user);
+
+        // view access
+        $this->get('/organizations')->assertStatus(200);
+
+		// store access
+        $data = ['name' => 'New Org', 'phone' => '866.733.2162', 'city' => 'New York'];
+		$response = $this->post('/organizations', $data);
+
+		$response->assertRedirect(route('organizations'))
+             ->assertSessionHas('success', 'Organization created.');
+
+		// update access
+		$organization = Organization::factory()->create([
+			'account_id' => $this->user->account_id
+		]);
+        $updateData = ['name' => 'Updated Org'];
+        $response = $this->put("/organizations/{$organization->id}", $updateData);
+		$response->assertRedirect()->assertSessionHas('success', 'Organization updated.');
+
+		// delete access
+		$response = $this->delete("/organizations/{$organization->id}");
+		$response->assertRedirect()->assertSessionHas('success', 'Organization deleted.');
     }
 }
